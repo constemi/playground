@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { Provider } from "react-redux";
+import { NavBar } from "./components";
+import { Posts } from "./features";
+
+import store from "./store";
+import theme from "./theme";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <NavBar />
+          <div className="App">
+            <Switch>
+              <Route exact path="/" render={() => <Posts />} />
+              <Redirect to="/" />
+            </Switch>
+          </div>
+        </ThemeProvider>
+      </Router>
+    </Provider>
   );
 }
 
