@@ -5,7 +5,7 @@ import React from "react";
  * @param {object} initialValues
  * @param {object} validate
  *
- * const Form = withFormValidation(Form, initialValues, validateFunc)
+ * const EnhancedForm = withFormValidation(Form, initialValues, validateFunc)
  */
 
 interface State {

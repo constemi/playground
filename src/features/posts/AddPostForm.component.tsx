@@ -27,6 +27,7 @@ function Form({
 
   const onSavePostClicked = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const { errors } = handleSubmit(event);
     const formIsValid = !Object.values(errors).some((error) => Boolean(error));
 
