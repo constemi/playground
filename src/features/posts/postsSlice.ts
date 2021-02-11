@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface Post {
+export interface PostState {
     id: string,
     title: string,
     content: string
@@ -9,7 +9,7 @@ export interface Post {
 const initialState = [
   { id: '1', title: 'First Post!', content: 'Hello!' },
   { id: '2', title: 'Second Post', content: 'More text' }
-]
+] as PostState[]
 
 const postsSlice = createSlice({
   name: 'posts',

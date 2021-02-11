@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { AddPostForm } from "./AddPostForm.component";
 import { PostsList } from "./PostsList.component";
 
-const Section = styled.section`
-  max-width: 1000px;
+const Section = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
 `;
 
 const Aside = styled.aside`
-  float: left;
-  height: 75vh;
-  width: 500px;
-  padding-top: 50px;
-  padding-left: 50px;
+  flex: 2;
+  padding-top: 25px;
+  max-width: 33%;
 `;
 
 export function Posts() {

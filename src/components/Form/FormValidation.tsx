@@ -3,33 +3,43 @@ import React from "react";
 /** Wraps and Enhances a Form with FormValidation:
  * @param {Component} WrappedComponent
  * @param {object} initialValues
- * @param {object} validate
+ * @param {object} validate {fieldName: (val) => validateFunc(fieldName, val)}
  *
- * const EnhancedForm = withFormValidation(Form, initialValues, validateFunc)
+ * const EnhancedForm = withFormValidation(Form, initialValues, validate)
  */
 
-interface State {
-  values: any;
-  errors: any;
-  touched: any;
-  submitted: boolean;
+export interface Dictionary<T> {
+  [Key: string]: T | undefined;
 }
 
-interface FormProps {
-  errors: any;
-  handleBlur: any;
-  handleChange: any;
-  handleSubmit: any;
-  touched: any;
-  values: any;
-}
+type Validation = {
+  errors: Dictionary<string>;
+  touched: Dictionary<boolean>;
+  formIsValid?: boolean;
+};
+
+type State = {
+  values: Dictionary<string>;
+  errors: Dictionary<string>;
+  touched: Dictionary<boolean>;
+  submitted: boolean;
+};
+
+export type FormProps = {
+  handleBlur: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (evt: React.FormEvent<HTMLFormElement>) => Validation;
+  errors: Dictionary<string>;
+  values: Dictionary<string>;
+  touched: Dictionary<boolean>;
+};
 
 export const withFormValidation = <P extends object>(
-  WrappedComponent: React.ComponentType<P & FormProps>,
+  WrappedComponent: React.ComponentType<P>,
   initialValues: any,
   validate: any
 ) =>
-  class WithFormValidation extends React.Component<P> {
+  class WithFormValidation extends React.Component<{}> {
     state: State = {
       values: initialValues,
       errors: {},
@@ -80,12 +90,12 @@ export const withFormValidation = <P extends object>(
     };
 
     // form submit handler
-    handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit = (evt: React.FormEvent<HTMLFormElement>): Validation => {
       evt.preventDefault();
       const { values, errors, touched } = this.state;
 
       // validate the form
-      const data = Object.keys(values).reduce(
+      const validation = Object.keys(values).reduce(
         (acc, key) => {
           const newError = validate[key](values[key]);
           const newTouched = { [key]: true };
@@ -109,11 +119,16 @@ export const withFormValidation = <P extends object>(
       // update local state with validation results
       this.setState({
         submitted: true,
-        errors: data.errors,
-        touched: data.touched,
+        errors: validation.errors,
+        touched: validation.touched,
       });
 
-      return data;
+      // return validated results
+      const formIsValid = !Object.values(validation.errors).some((error) =>
+        Boolean(error)
+      );
+
+      return { ...validation, formIsValid };
     };
 
     render() {

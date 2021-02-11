@@ -3,9 +3,9 @@ import { render, fireEvent, cleanup } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
-import { Posts } from "../../features/posts/Posts.container";
-import store from "../../store";
-import theme from "../../theme";
+import { Posts } from "../Posts.container";
+import store from "../../../store";
+import theme from "../../../theme";
 
 function TestPosts() {
   return (

@@ -2,18 +2,47 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { Button, Input } from "../../components";
 import { postAdded } from "./postsSlice";
-import { withFormValidation, requiredTextField } from "../../components/Form";
+import {
+  Button,
+  Input,
+  requiredTextField,
+  withFormValidation,
+} from "../../components";
 
 const StyledForm = styled.form`
-  width: 75%;
+  width: 80%;
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: end;
+  padding-top: 8px;
+`;
+
+interface Dictionary<T> {
+  [Key: string]: T | undefined;
+}
+
+export type Validation = {
+  errors: Dictionary<string>;
+  touched: Dictionary<string>;
+  formIsValid?: boolean;
+};
+
+export type FormProps = {
+  errors: Dictionary<string>;
+  values: Dictionary<string>;
+  touched: Dictionary<boolean>;
+  handleBlur: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (evt: React.FormEvent<HTMLFormElement>) => Validation;
+};
 
 function Form({
   errors,
@@ -22,14 +51,13 @@ function Form({
   handleSubmit,
   touched,
   values,
-}: any) {
+}: FormProps) {
   const dispatch = useDispatch();
 
   const onSavePostClicked = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const { errors } = handleSubmit(event);
-    const formIsValid = !Object.values(errors).some((error) => Boolean(error));
+    const { formIsValid } = handleSubmit(event);
 
     if (formIsValid) {
       dispatch(
@@ -77,17 +105,14 @@ function Form({
           error={touched.content && errors.content}
         />
       </FormGroup>
-      <div
-        className="form-group"
-        style={{ display: "flex", justifyContent: "end", paddingTop: "8px" }}
-      >
+      <ButtonGroup className="form-group">
         <Button
           primary
           type="submit"
           text="Save Post"
           data-testid="submitPost"
         />
-      </div>
+      </ButtonGroup>
     </StyledForm>
   );
 }

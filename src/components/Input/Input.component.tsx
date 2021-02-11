@@ -9,7 +9,7 @@ interface InputProps
       HTMLInputElement
     >
   > {
-  error?: string;
+  error?: string | false | undefined;
 }
 const StyledInput = styled.input.attrs((props) => ({
   type: props.type || "text",
