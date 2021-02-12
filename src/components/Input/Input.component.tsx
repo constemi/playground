@@ -22,16 +22,12 @@ const StyledInput = styled.input.attrs((props) => ({
   margin-bottom: 10px;
   padding: ${(props) => props.size};
   background-color: rgb(255, 255, 255);
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    ${(props) => props.theme.colors.lightBrand} 0px 0px 0px 1px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+  box-shadow: 0px 0px 0px 2px ${(props) => props.theme.colors.lightBrand};
   &:focus {
-    border: 2.5px solid
+    border: 2px solid
       ${(props) =>
         props.error
-          ? props.theme.colors.statuserror
+          ? props.theme.colors["status-error"]
           : props.theme.colors.brand};
   }
 `;
@@ -39,7 +35,7 @@ const StyledInput = styled.input.attrs((props) => ({
 const StyledErrorMessage = styled.div`
   display: flex;
   font-size: 1rem;
-  color: ${(props) => props.theme.colors.statuserror};
+  color: ${(props) => props.theme.colors["status-error"]};
   flex-direction: row;
   padding-bottom: 10px;
 `;
@@ -57,7 +53,7 @@ export function Input({ error, ...restProps }: InputProps): React.ReactElement {
       {error && (
         <StyledErrorMessage>
           <StyledIcon>
-            <CircleAlert color="statuserror" />
+            <CircleAlert color="status-error" />
           </StyledIcon>
           {error}
         </StyledErrorMessage>

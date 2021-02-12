@@ -27,7 +27,7 @@ const StyledButton = styled.button`
   padding: 9px 13px;
   position: relative;
   transition: all 50ms ease;
-  overflow: hidden;
+  overflow: hidden !important;
 
   &:hover {
     border: 2px solid ${(props: any) => props.theme.button.bg};

@@ -8,9 +8,9 @@ import React from "react";
  * const EnhancedForm = withFormValidation(Form, initialValues, validate)
  */
 
-export interface Dictionary<T> {
+export type Dictionary<T> = {
   [Key: string]: T | undefined;
-}
+};
 
 type Validation = {
   errors: Dictionary<string>;
@@ -146,5 +146,3 @@ export const withFormValidation = <P extends object>(
       );
     }
   };
-
-export default withFormValidation;

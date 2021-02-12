@@ -7,6 +7,8 @@ interface CardHeaderProps {
 }
 const Header = styled.div`
   flex: 1 1 0%;
+  flex-direction: row;
+  justify-conent: between;
   height: ${(props) =>
     props.style ? props.style.height : props.theme.card.header.height};
 `;
