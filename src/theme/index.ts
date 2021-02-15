@@ -1,5 +1,5 @@
 const brand = "#4cb0a8";
-const lightBrand = "#82cac4";
+const brandLight = "#82cac4";
 
 const accentColors = ['#6FFFB0', '#FD6FFF', '#81FCED', '#FFCA58'];
 const neutralColors = ['#00873D', '#3D138D', '#00739D', '#A2423D'];
@@ -55,7 +55,7 @@ const colors: Record<string, any> = {
     light: "rgba(0, 0, 0, 0.33)",
   },
   brand: brand,
-  lightBrand: lightBrand,
+  brandLight: brandLight,
   control: {
     dark: 'accent-1',
     light: 'brand',

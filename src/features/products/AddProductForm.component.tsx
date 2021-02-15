@@ -2,16 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { nanoid } from "@reduxjs/toolkit";
-import { postAdded } from "./postsSlice";
+import { productAdded } from "./productsSlice";
 import {
   Button,
-  Input,
+  TextField,
   requiredTextField,
   withFormValidation,
 } from "../../components";
 
 const StyledForm = styled.form`
-  width: 80%;
+  max-width: 540px;
+  min-width: 0px;
+  min-height: 0px;
 `;
 
 const FormGroup = styled.div`
@@ -54,16 +56,21 @@ function Form({
 }: FormProps) {
   const dispatch = useDispatch();
 
-  const onSavePostClicked = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSaveProductClicked = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { formIsValid } = handleSubmit(event);
 
     if (formIsValid) {
       dispatch(
-        postAdded({
+        productAdded({
           id: nanoid(),
+          name: "Product",
+          price: 19.99,
+          retail: 25.5,
+          shipping: 4.0,
           title: values.title,
+          category: "Home & Kitchen",
           content: values.content,
         })
       );
@@ -72,47 +79,44 @@ function Form({
 
   return (
     <StyledForm
-      id="addPostForm"
-      data-testid="addPostForm"
-      onSubmit={onSavePostClicked}
+      id="AddProductForm"
+      data-testid="addProductForm"
+      onSubmit={onSaveProductClicked}
     >
       <FormGroup className="form-group">
-        <label htmlFor="postTitle">Post Title</label>
-        <Input
-          id="postTitle"
-          type="text"
-          className="form-control"
+        <TextField
+          id="productName"
           name="title"
-          data-testid="postTitle"
-          placeholder="post title"
+          label="Title"
+          className="form-control"
+          testId="productName"
+          placeholder="product name"
           onBlur={handleBlur}
           onChange={handleChange}
           value={values.title}
           error={touched.title && errors.title}
         />
-      </FormGroup>
-      <FormGroup className="form-group">
-        <label htmlFor="postTitle">Post Content</label>
-        <Input
-          id="postContent"
-          type="text"
-          className="form-control"
+        <TextField
+          id="productDesc"
           name="content"
-          data-testid="postContent"
+          label="Content"
+          className="form-control"
+          testId="productDesc"
+          placeholder="product description"
           onBlur={handleBlur}
           onChange={handleChange}
           value={values.content}
           error={touched.content && errors.content}
         />
+        <ButtonGroup>
+          <Button
+            primary
+            type="submit"
+            text="Save Product"
+            data-testid="submitProduct"
+          />
+        </ButtonGroup>
       </FormGroup>
-      <ButtonGroup className="form-group">
-        <Button
-          primary
-          type="submit"
-          text="Save Post"
-          data-testid="submitPost"
-        />
-      </ButtonGroup>
     </StyledForm>
   );
 }
@@ -127,4 +131,4 @@ const validate = {
   content: (content: string) => requiredTextField("content", content),
 };
 
-export const AddPostForm = withFormValidation(Form, initialValues, validate);
+export const AddProductForm = withFormValidation(Form, initialValues, validate);

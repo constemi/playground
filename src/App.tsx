@@ -8,7 +8,7 @@ import {
 import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
 import { NavBar } from "./components";
-import { Posts } from "./features";
+import { Products } from "./features";
 
 import store from "./store";
 import theme from "./theme";
@@ -21,7 +21,7 @@ function App() {
           <NavBar />
           <div className="App">
             <Switch>
-              <Route exact path="/" render={() => <Posts />} />
+              <Route exact path="/" render={() => <Products />} />
               <Redirect to="/" />
             </Switch>
           </div>

@@ -1,2 +1,2 @@
-export { AddPostForm } from './posts/AddPostForm.component'
-export { Posts } from './posts/Posts.container'
+export { AddProductForm } from './products/AddProductForm.component'
+export { Products } from './products/Products.container'
